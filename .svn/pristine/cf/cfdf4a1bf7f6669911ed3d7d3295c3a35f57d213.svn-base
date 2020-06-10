@@ -1,0 +1,57 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../home/common/header.jsp"%>
+<head>
+    <meta name="Content-Type"  content="text/html;charset=utf-8">
+    <meta name="keywords" content="湘潭大学研讯论坛">
+    <title>湘潭大学研讯论坛</title>
+    <script src="../resources/forum/js/jquery-3.2.1.js"></script>
+    <script src="../resources/forum/js/bootstrap.min.js"></script>
+    <style>
+    	a{
+            color: #8A8A8A;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<!-- 引入header文件 include file="header.jsp"-->
+<%@ include file="common/header.jsp"%>
+<div class="panel panel-default" id="main" style="width: 70%;margin:1% 2% 5% 5%;float: left;">
+    <!-- 
+    <div class="panel-heading" style="background-color: white">
+        <a style="margin-right: 2%">活跃</a><a style="margin-right: 2%">精华</a><a style="margin-right: 2%">最近</a>
+    </div>
+ 	-->
+<ul class="list-group" style="width: 100%">
+    <c:forEach items="${topics}" var="topic">
+    <li class="list-group-item">
+        <div style="height: 50px">
+            <div style="float: left;width: 6%;margin-bottom: 5px">
+                <img width="50px" height="50px" src="${topic.user.photo}" class="img-rounded">
+            </div>
+            <div style="width: 89%;float: left">
+                <a href="../topic/detail?id=${topic.id}">${topic.title}</a><br/>
+                <div>
+                    <a><span class="label label-default" >${topic.tab.tabName}</span></a>&nbsp;&nbsp;&nbsp;
+                    <!-- 用户个人主页 -->
+                    <a href="/member/${topic.user.id}"><span ><strong>${topic.user.nickname}</strong></span></a>&nbsp;&nbsp;&nbsp;
+                    <small class="text-muted">${topic.localCreateTime}</small>
+                </div>
+            </div>
+            <div style="width: 5%;float: right;text-align: center">
+                <span class="badge">${topic.countReplies}</span>
+            </div>
+        </div>
+    </li>
+    </c:forEach>
+
+</ul>
+
+</div>
+
+<!-- 引入侧边栏文件 -->
+<%@ include file="common/side.jsp"%>
+
+<!-- 引入footer文件 -->
+<%@ include file="../home/common/footer.jsp" %>

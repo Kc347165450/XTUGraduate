@@ -1,0 +1,55 @@
+package com.ischoolbar.programmer.entity.teacher;
+
+import java.util.Date;
+
+/**
+ * 导师评论实体
+ * @author 20161
+ *
+ */
+public class TeacherComment {
+	private Long id;
+	private Teacher teacher;
+	private Long teacherId;
+	private String nickname;//昵称
+	private String content;//评论内容
+	private Date createTime;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public Teacher getTeacher() {
+		return teacher;
+	}
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
+	
+	public Long getTeacherId() {
+		return teacherId;
+	}
+	public void setTeacherId(Long teacherId) {
+		this.teacherId = teacherId;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+	
+}

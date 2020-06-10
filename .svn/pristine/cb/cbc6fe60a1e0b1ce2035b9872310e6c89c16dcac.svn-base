@@ -1,0 +1,23 @@
+package com.ischoolbar.programmer.dao.teacher;
+/**
+ * 学院dao
+ */
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Repository;
+
+import com.ischoolbar.programmer.entity.admin.Menu;
+import com.ischoolbar.programmer.entity.teacher.Academy;
+
+@Repository
+public interface AcademyDao {
+	public int add(Academy academy);
+	public int delete(Long id);
+	public int edit(Academy academy);
+	public List<Academy> findList(Map<String,Object> queryMap);
+	public List<Academy> findAll();
+	public int getTotal(Map<String,Object> queryMap);
+	public Academy find(int id);
+	public List<Academy> findChildernList(int academyId);//获取本院的所有系别
+}

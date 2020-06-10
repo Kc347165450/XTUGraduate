@@ -1,0 +1,38 @@
+package com.ischoolbar.programmer.dao.forum;
+
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Repository;
+
+import com.ischoolbar.programmer.entity.forum.Topic;
+@Repository
+public interface TopicDao {
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(Topic record);
+
+    int insertSelective(Topic record);
+
+    Topic selectById(Integer id);
+
+    List<Topic> listTopicsAndUsers(Map<String,Object> queryMap);
+
+    List<Topic> listTopicsAndUsersOfTab(Integer tabId);
+
+    List<Topic>  listMostCommentsTopics();
+
+    int updateByPrimaryKeySelective(Topic record);
+
+    int updateByPrimaryKeyWithBLOBs(Topic record);
+
+    int updateByPrimaryKey(Topic record);
+
+    List<Topic> getAllTopics();
+
+    int clickAddOne(Integer id);
+
+    //获取主题总数
+    int getTopicsNum();
+}

@@ -1,0 +1,20 @@
+package com.ischoolbar.programmer.dao.forum;
+
+import org.springframework.stereotype.Repository;
+
+import com.ischoolbar.programmer.entity.forum.LoginLog;
+
+@Repository
+public interface LoginLogDao {
+    int deleteByPrimaryKey(Long id);
+
+    int insert(LoginLog record);
+
+    int insertSelective(LoginLog record);
+
+    LoginLog selectByPrimaryKey(Long id);
+
+    int updateByPrimaryKeySelective(LoginLog record);
+
+    int updateByPrimaryKey(LoginLog record);
+}

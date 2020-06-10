@@ -1,0 +1,47 @@
+config\mybatis\mapper数据库操作
+WEB-INF\views\home\common 网站首页
+WEB-INF\views\home\common\header.jsp 登陆注册按钮
+WEB-INF\views\home\common\sidebar.jsp 首页右侧
+WEB-INF\views\home\index\index.jsp 网站首页页面
+var user = '<%= session.getAttribute("user")%>';
+src\com.\controller\indexController 前台页面首页控制器
+src\com.\controller\homeNewsController 前台新闻控制器
+WEB-INF\views\news\add.jsp 后台添加新闻页面
+<img class="thumb" data-original="${news.photo }" src="${news.photo }" alt="${news.title }"  style="display: inline;">
+<a class="cat" href="../news/category_list?cid=${news.categoryId }" title="${news.newsCategory.name }" >${news.newsCategory.name }<i></i></a>
+注册，登录，个人信息，退出按钮的隐藏和出现 https://liuyanzhao.com/3498.html
+$(function(){
+	$('#ed').hide();//用户名和退出按钮
+	var user = '<%= session.getAttribute("user")%>';
+	alert(user);
+	if (user == null || user == "") {
+	    $('#pre').show();//登陆注册按钮
+	    $('#ed').hide();
+	} 
+	else {
+	    $('#pre').hide();
+	    $('#ed').show();
+	}
+	alert(user);
+});
+
+<script>
+//页面刚加载的时候，开始判断，如果有用户名，就显示在页面上，如果没有用户名的话，就显示登录名称
+$(function(){
+//function load_data(){
+	var user = $.cookie('username');
+	alert("1");
+	if(user){
+		alert("1");
+	    $('#ed').show();
+	    $('#pre').hide();
+	} 
+	else{
+		alert("2");
+		//alert(user!=null);
+	    $('#ed').hide();
+	    $('#pre').show();
+	}
+});
+
+</script>

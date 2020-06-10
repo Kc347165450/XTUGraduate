@@ -1,0 +1,192 @@
+package com.ischoolbar.programmer.controller.home;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.ischoolbar.programmer.entity.admin.User;
+import com.ischoolbar.programmer.entity.forum.Topic;
+import com.ischoolbar.programmer.service.admin.NewsCategoryService;
+import com.ischoolbar.programmer.service.admin.UserService;
+import com.ischoolbar.programmer.service.forum.TopicService;
+import com.ischoolbar.programmer.util.ProduceMD5;
+/**
+ * 前台用户个人信息控制器
+ * @author 20161
+ *
+ */
+@RequestMapping("/user")
+@Controller
+public class HomeUserController {
+	
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private TopicService topicService;
+	@Autowired
+	private NewsCategoryService newsCategoryService;
+	
+	/**
+	 * 用户个人页面
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/info",method=RequestMethod.GET)
+	public ModelAndView index(ModelAndView model){
+		model.addObject("newsCategoryList", newsCategoryService.findAll());//首页导航栏
+		model.setViewName("home/user/info");
+		return model;
+	}
+	/**
+	 * 修改密码页面
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/update_pwd",method = RequestMethod.GET)
+	public ModelAndView updatePwd(ModelAndView model){
+		model.addObject("newsCategoryList", newsCategoryService.findAll());//首页导航栏
+		model.setViewName("home/user/update_pwd");
+		return model;
+	}
+	
+	/**
+	 * 修改密码提交
+	 * @param password
+	 * @param newPassword
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/update_pwd",method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, String> updatePassword(String password,String newPassword,
+			HttpServletRequest request){
+		Map<String, String> ret = new HashMap<String, String>();
+		User user = (User)request.getSession().getAttribute("user");
+		ret.put("type", "error");
+		if(StringUtils.isEmpty(password)){
+			ret.put("msg", "旧密码不能为空！");
+			return ret;
+		}
+		if(StringUtils.isEmpty(newPassword)){
+			ret.put("msg", "新密码不能为空！");
+			return ret;
+		}
+		String user_password=user.getPassword();
+		String old_password=ProduceMD5.getMD5(password);
+		if(!user_password.equals(old_password)){
+			ret.put("msg", "旧密码错误！");
+			return ret;
+		}
+		user.setPassword(ProduceMD5.getMD5(newPassword));//新密码加密
+		if(userService.editPassword(user)<= 0){
+			ret.put("msg", "修改失败，请联系管理员！");
+			return ret;
+		}
+		ret.put("type", "success");
+		return ret;
+	}
+	
+	/**
+	 * 更新资料
+	 * @param User
+	 * @return
+	 */
+	@RequestMapping(value = "/update_info",method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, String> updateInfo(User User,
+			HttpServletRequest request){
+		Map<String, String> ret = new HashMap<String, String>();
+		User onlineUser = (User)request.getSession().getAttribute("user");
+		ret.put("type", "error");
+		if(User == null){
+			ret.put("msg", "请填写正确的信息");
+			return ret;
+		}
+		if(StringUtils.isEmpty(User.getEmail())){
+			ret.put("msg", "邮箱地址不能为空！");
+			return ret;
+		}
+		if(StringUtils.isEmpty(User.getNickname())){
+			ret.put("msg", "真实姓名不能为空！");
+			return ret;
+		}
+		onlineUser.setEmail(User.getEmail());
+		onlineUser.setNickname(User.getNickname());
+		onlineUser.setSex(User.getSex());
+		if(userService.edit(onlineUser) <= 0){
+			ret.put("msg", "修改失败，请联系管理员！");
+			return ret;
+		}
+		ret.put("type", "success");
+		return ret;
+	}
+	
+	/**
+	 * 帖子列表页面
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/topic",method = RequestMethod.GET)
+	public ModelAndView index(ModelAndView model,Integer page,HttpServletRequest request){
+		User user = (User)request.getSession().getAttribute("user");
+		Map<String, Object> queryMap = new HashMap<String, Object>();
+		model.addObject("newsCategoryList", newsCategoryService.findAll());//首页导航栏
+		if(page == null || page.intValue() <= 0){
+			page = 1;
+		}
+		queryMap.put("offset", (page -1) * 10);
+		queryMap.put("pageSize", 10);
+		queryMap.put("userId", user.getId());
+//		queryMap.put("orderBy", "createTime");
+		model.addObject("topicList", topicService.findList(queryMap));
+//		model.addObject("currentUser", "current_");
+		model.addObject("page", page);
+		model.setViewName("home/user/topic");
+		return model;
+	}
+	/**
+	 * 删除帖子
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/delete",method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, String> delete(Long id){
+		Map<String, String> ret = new HashMap<String, String>();
+		ret.put("type", "error");
+		if(id == null){
+			ret.put("msg", "请选择要删除的评论");
+			return ret;
+		}
+		Topic topic = topicService.findById(id);
+		if(topic == null){
+			ret.put("msg", "评论不存在!");
+			return ret;
+		}
+		if(topicService.delete(id) <= 0){
+			ret.put("msg", "删除出错，请联系管理员!");
+			return ret;
+		}
+		//更新商品评论数量
+		ret.put("type", "success");
+		return ret;
+	}
+
+	
+
+}

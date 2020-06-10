@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ischoolbar.programmer.dao.teacher.TeacherDao">
+	<!-- 导师全信息 -->
+	<resultMap id="teacherMap" type="Teacher" >
+	  	<id column="t_id" property="id" />
+	  	<result column="t_academyId" property="academyId"  />
+	  	<result column="t_departmentId" property="departmentId"  />
+	    <result column="t_Name" property="teacherName"  />
+	    <result column="t_photo" property="photo"  />
+	    <result column="t_tel" property="tel"  />
+	    <result column="t_email" property="email"  />
+	    <result column="t_content" property="content"  />
+	    <result column="t_commentNumber" property="commentNumber"  />
+	    <association property="academy" javaType="Academy">
+	    	<id column="a_id" property="id" />
+	  		<result column="a_Name" property="academyName"  />
+	    </association>
+	    <association property="department" javaType="Department">
+	    	<id column="d_id" property="id" />
+	  		<result column="d_Name" property="departmentName"  />
+	    </association>
+	  </resultMap>
+	<!-- 添加导师信息 -->
+	<insert id="add" parameterType="Teacher">
+		insert into teacher(id,teacherName,academyId,departmentId,photo,tel,email,content) values(null,#{teacherName},#{academyId},#{departmentId},#{photo},#{tel},#{email},#{content})
+	</insert>
+	<!-- 修改导师信息 -->
+	<update id="edit" parameterType="Teacher">
+		update teacher set teacherName = #{teacherName}, academyId = #{academyId},departmentId = #{departmentId},photo = #{photo},tel = #{tel},email = #{email},content = #{content}
+		where id = #{id}
+	</update>
+	<!-- 删除导师信息 -->
+	<delete id="delete" parameterType="Long">
+		delete from teacher where id = ${value}
+	</delete>
+	<!-- 分页获取导师信息列表 -->
+	<select id="findList" parameterType="Map" resultMap="teacherMap">
+		select t.id as t_id,t.academyId as t_academyId,t.departmentId as t_departmentId,t.teacherName as t_Name,t.photo as t_photo,t.tel as t_tel,t.commentNumber as t_commentNumber,t.email as t_email,t.content as t_content,
+		a.academyName as a_Name,a.id as a_id,
+		d.departmentName as d_Name,d.id as d_id
+		from teacher t,academy a,department d
+		where t.academyId = a.id and t.departmentId = d.id
+		<if test="teacherName != null">
+			and t.teacherName like '%${teacherName}%' 
+		</if>
+		<if test="academyId != null">
+			and t.academyId = #{academyId}  
+		</if>
+		<if test="departmentId != null">
+			and t.departmentId = #{departmentId}  
+		</if>
+		order by t.academyId desc 
+		<if test="offset != null and pageSize != null">
+			limit #{offset},#{pageSize}
+		</if>
+	</select>
+	<!-- 获取单条导师信息记录-->
+	<select id="find" parameterType="Long" resultMap="teacherMap">
+		select t.id as t_id,t.academyId as t_academyId,t.departmentId as t_departmentId,t.teacherName as t_Name,t.photo as t_photo,t.tel as t_tel,t.commentNumber as t_commentNumber,t.email as t_email,t.content as t_content,
+		a.academyName as a_Name,a.id as a_id,
+		d.departmentName as d_Name,d.id as d_id
+		from teacher t,academy a,department d
+		where t.academyId = a.id and t.departmentId = d.id and t.id = #{value} 
+	</select> 
+	<!-- 获取符合结果的总记录数 -->
+	<select id="getTotal" parameterType="Map" resultType="Integer">
+		select count(*) from teacher where 1 = 1 
+		<if test="teacherName != null">
+			and teacherName like '%${teacherName}%' 
+		</if>
+		<if test="academyId != null">
+			and academyId = #{academyId}  
+		</if>
+		<if test="departmentId != null">
+			and departmentId = #{departmentId}  
+		</if>
+	</select>
+	<!-- 修改导师评论数量 -->
+	<update id="updateCommentNumber" parameterType="Long">
+		update teacher set commentNumber = commentNumber + 1 where id = #{id}
+	</update>
+	
+</mapper>

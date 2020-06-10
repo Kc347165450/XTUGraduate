@@ -1,0 +1,76 @@
+package com.ischoolbar.programmer.entity.teacher;
+/**
+ * 导师表
+ * @author 20161
+ *
+ */
+public class Teacher {
+	private int id;
+	private String tercherName;//导师姓名
+	private Long academyId;//学院
+	private Long departmentId;//专业
+	private String photo;
+	private String tel;//电话
+	private String email;
+	private String information;//导师详细信息
+	private int commentNumber = 0;//评论数量
+	public int getCommentNumber() {
+		return commentNumber;
+	}
+	public void setCommentNumber(int commentNumber) {
+		this.commentNumber = commentNumber;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getTercherName() {
+		return tercherName;
+	}
+	public void setTercherName(String tercherName) {
+		this.tercherName = tercherName;
+	}
+	public Long getAcademyId() {
+		return academyId;
+	}
+	public void setAcademyId(Long academyId) {
+		this.academyId = academyId;
+	}
+	public Long getDepartmentId() {
+		return departmentId;
+	}
+	public void setDepartmentId(Long departmentId) {
+		this.departmentId = departmentId;
+	}
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+	public String getTel() {
+		return tel;
+	}
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getInformation() {
+		return information;
+	}
+	public void setInformation(String information) {
+		this.information = information;
+	}
+	
+	
+	
+	
+
+}

@@ -1,0 +1,71 @@
+package com.ischoolbar.programmer.service.forum.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ischoolbar.programmer.dao.forum.TopicDao;
+import com.ischoolbar.programmer.entity.forum.Topic;
+import com.ischoolbar.programmer.service.forum.TopicService;
+
+import java.util.List;
+import java.util.Map;
+
+@Service
+public class TopicServiceImpl implements TopicService {
+
+    @Autowired
+    public TopicDao topicDao;
+
+    //获取全部主题
+    public List<Topic> getAllTopics() {
+        return topicDao.getAllTopics();
+    }
+
+    //获取指定id主题
+    public Topic selectById(Integer id) {
+        Topic topic=topicDao.selectById(id);
+        return topic;
+    }
+
+    public List<Topic> listMostCommentsTopics() {
+        return topicDao.listMostCommentsTopics();
+    }
+
+    public boolean addTopic(Topic topic) {
+        return topicDao.insert(topic)>0;
+    }
+
+    public boolean clickAddOne(Integer id) {
+        return topicDao.clickAddOne(id)>0;
+    }
+
+    public int getTopicsNum() {
+        return topicDao.getTopicsNum();
+    }
+
+    public List<Topic> listTopicsAndUsers(Map<String,Object> queryMap) {
+        return topicDao.listTopicsAndUsers(queryMap);
+    }
+
+    public List<Topic> listTopicsAndUsersOfTab(Integer tabId) {
+        return topicDao.listTopicsAndUsersOfTab(tabId);
+    }
+
+	@Override
+	public int delete(Long id) {
+		// TODO Auto-generated method stub
+		return topicDao.delete(id);
+	}
+
+	@Override
+	public List<Topic> findList(Map<String, Object> queryMap) {
+		// TODO Auto-generated method stub
+		return topicDao.findList(queryMap);
+	}
+
+	@Override
+	public int getTotal(Map<String, Object> queryMap) {
+		// TODO Auto-generated method stub
+		return topicDao.getTotal(queryMap);
+	}
+}

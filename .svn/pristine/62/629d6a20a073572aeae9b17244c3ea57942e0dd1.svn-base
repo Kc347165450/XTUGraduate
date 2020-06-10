@@ -1,0 +1,33 @@
+package com.ischoolbar.programmer.service.admin;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+import com.ischoolbar.programmer.entity.admin.User;
+
+/**
+ * user用户service
+ * @author llq
+ *
+ */
+@Service
+public interface UserService {
+	public User findByUserId(Long userId);
+	public User findByUsername(String username);
+	public User findByNickname(String nickname);
+	public User findByEmail(String email);
+	public int register(User user);
+	public int add(User user);
+	public int edit(User user);
+	public int updateById(User user);//修改普通用户
+	public int editPassword(User user);
+	public int delete(String ids);
+	public boolean addCredit(Integer points,Long id);//添加积分
+	public int getCredit(Long id);//获取积分
+	public boolean delCredit(Integer points,Long id);//扣除积分
+	public List<User> findList(Map<String, Object> queryMap);
+	public int getTotal(Map<String, Object> queryMap);
+	public int getUserCount();
+}

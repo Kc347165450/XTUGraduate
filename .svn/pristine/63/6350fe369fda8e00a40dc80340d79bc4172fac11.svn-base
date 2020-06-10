@@ -1,0 +1,117 @@
+package com.ischoolbar.programmer.service.admin.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ischoolbar.programmer.dao.admin.UserDao;
+import com.ischoolbar.programmer.entity.admin.User;
+import com.ischoolbar.programmer.service.admin.UserService;
+/**
+ * user用户serviceimpl
+ * @author llq
+ *
+ */
+@Service
+public class UserServiceImpl implements UserService {
+
+	@Autowired
+	private UserDao userDao;
+	
+	@Override
+	public User findByUserId(Long userId) {
+		// TODO Auto-generated method stub
+		return userDao.findByUserId(userId);
+	}
+
+	@Override
+	public User findByUsername(String username) {
+		// TODO Auto-generated method stub
+		return userDao.findByUsername(username);
+	}
+	
+	@Override
+	public User findByNickname(String nickname) {
+		// TODO Auto-generated method stub
+		return userDao.findByNickname(nickname);
+	}
+
+	@Override
+	public int register(User user) {
+		// TODO Auto-generated method stub
+		return userDao.register(user);
+	}
+	
+	@Override
+	public int add(User user) {
+		// TODO Auto-generated method stub
+		return userDao.add(user);
+	}
+
+	@Override
+	public int edit(User user) {
+		// TODO Auto-generated method stub
+		return userDao.edit(user);
+	}
+	@Override
+	public int updateById(User user){
+		return userDao.updateById(user);
+	}
+
+	@Override
+	public int delete(String ids) {
+		// TODO Auto-generated method stub
+		return userDao.delete(ids);
+	}
+
+	@Override
+	public List<User> findList(Map<String, Object> queryMap) {
+		// TODO Auto-generated method stub
+		return userDao.findList(queryMap);
+	}
+
+	@Override
+	public int getTotal(Map<String, Object> queryMap) {
+		// TODO Auto-generated method stub
+		return userDao.getTotal(queryMap);
+	}
+
+	@Override
+	public int editPassword(User user) {
+		// TODO Auto-generated method stub
+		return userDao.editPassword(user);
+	}
+	
+	@Override
+	//增加积分
+    public boolean addCredit(Integer points,Long id) {
+        return userDao.addCredit(points,id)>0;
+    }
+	
+
+	public int getUserCount() {
+		// TODO Auto-generated method stub
+		return userDao.getUserCount();
+	}
+
+	@Override
+	public User findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return userDao.findByEmail(email);
+	}
+
+	@Override
+	public boolean delCredit(Integer points, Long id) {
+		// TODO Auto-generated method stub
+		return userDao.delCredit(points,id)>0;
+	}
+
+	@Override
+	public int getCredit(Long id) {
+		// TODO Auto-generated method stub
+		return userDao.getCredit(id);
+	}
+
+}

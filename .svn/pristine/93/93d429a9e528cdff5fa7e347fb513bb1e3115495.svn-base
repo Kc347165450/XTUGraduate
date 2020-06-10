@@ -1,0 +1,16 @@
+package com.ischoolbar.programmer.service.forum;
+
+import org.springframework.stereotype.Service;
+
+import com.ischoolbar.programmer.entity.forum.LoginLog;
+
+
+@Service
+public interface LoginLogService {
+
+
+    /**
+     * 插入一条登录日志
+     */
+    boolean addLog(LoginLog log);
+}

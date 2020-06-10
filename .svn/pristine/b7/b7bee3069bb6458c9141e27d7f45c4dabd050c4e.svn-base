@@ -1,0 +1,48 @@
+package com.ischoolbar.programmer.service.teacher.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ischoolbar.programmer.dao.teacher.TeacherCommentDao;
+import com.ischoolbar.programmer.entity.teacher.TeacherComment;
+import com.ischoolbar.programmer.service.teacher.TeacherCommentService;
+
+@Service
+public class TeacherCommentServiceImpl implements TeacherCommentService {
+	@Autowired
+	private TeacherCommentDao teacherCommentDao;
+
+	@Override
+	public int add(TeacherComment teacherComment) {
+		// TODO Auto-generated method stub
+		return teacherCommentDao.add(teacherComment);
+	}
+
+	@Override
+	public int delete(String ids) {
+		// TODO Auto-generated method stub
+		return teacherCommentDao.delete(ids);
+	}
+
+	@Override
+	public List<TeacherComment> findList(Map<String, Object> queryMap) {
+		// TODO Auto-generated method stub
+		return teacherCommentDao.findList(queryMap);
+	}
+
+	@Override
+	public List<TeacherComment> findAll() {
+		// TODO Auto-generated method stub
+		return teacherCommentDao.findAll();
+	}
+
+	@Override
+	public int getTotal(Map<String, Object> queryMap) {
+		// TODO Auto-generated method stub
+		return teacherCommentDao.getTotal(queryMap);
+	}
+
+}

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ischoolbar.programmer.dao.admin.MessageDao">
+	<!-- 多表联合查询 -->
+	<resultMap type="Message" id="messageMap">
+		<id column="m_id" property="id" />
+		<result column="m_userId" property="userId" />
+		<result column="m_content" property="content" />
+		<result column="m_createTime" property="createTime" />
+		<association property="user" javaType="User">
+			<id column="u_id" property="id" />
+			<result column="u_nickname" property="nickname" />
+		</association>
+	</resultMap>
+	<!-- 添加评论-->
+	<insert id="add" parameterType="Message">
+		insert into message(id,userId,content,createTime) values(null,#{userId},#{content},#{createTime})
+	</insert>
+	<!-- 批量删除留言-->
+	<delete id="delete" parameterType="String">
+		delete from message where id in(${value}) 
+	</delete>
+	<!-- 分页获取评论列表 -->
+	<select id="findList" parameterType="Map" resultMap="messageMap">
+		select m.id as m_id,m.content as m_content,m.userId as m_userId,m.createTime as m_createTime,
+		u.id as u_id,u.nickname as u_nickname
+		from message m,user u where m.userId = u.id 
+		<if test="content != null">
+			and m.content like '%${content}%' 
+		</if>
+		<if test="offset != null and pageSize != null">
+			limit #{offset},#{pageSize}
+		</if>
+	</select>
+	<!-- 获取所有分类列表 -->
+	<select id="findAll" parameterType="Map" resultType="Message">
+		select * from message order by id desc 
+	</select>
+	<!-- 获取符合结果的总记录数 -->
+	<select id="getTotal" parameterType="Map" resultType="Integer">
+		select count(*) from message where 1 = 1 
+		<if test="content != null">
+			and content like '%${content}%' 
+		</if>
+	</select>
+	<!-- 获取单条新闻记录 -->
+	<select id="find" parameterType="Long" resultMap="messageMap">
+		select m.id as m_id,m.content as m_content,m.userId as m_userId,m.createTime as m_createTime,
+		u.id as u_id,u.nickname as u_nickname
+		from message m,user u where m.userId = u.id and m.id = #{value} 
+	</select>
+</mapper>

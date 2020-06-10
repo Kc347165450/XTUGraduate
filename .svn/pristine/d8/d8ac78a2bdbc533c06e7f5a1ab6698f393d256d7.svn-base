@@ -1,0 +1,25 @@
+package com.ischoolbar.programmer.service.forum.impl;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ischoolbar.programmer.dao.forum.LoginLogDao;
+import com.ischoolbar.programmer.entity.forum.LoginLog;
+import com.ischoolbar.programmer.service.forum.LoginLogService;
+
+@Service
+public class LoginLogServiceImpl implements LoginLogService {
+
+    @Autowired
+    public LoginLogDao loginLogDao;
+
+    public boolean addLog(LoginLog log) {
+
+        if(loginLogDao.insert(log)>0){
+            return true;
+        }else {
+            return false;
+        }
+    }
+}

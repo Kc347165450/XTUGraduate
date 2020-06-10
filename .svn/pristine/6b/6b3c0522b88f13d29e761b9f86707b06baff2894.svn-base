@@ -1,0 +1,84 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>湘潭大学研招资讯网站${title }</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="stylesheet" type="text/css" href="../resources/home/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="../resources/home/css/nprogress.css">
+<link rel="stylesheet" type="text/css" href="../resources/home/css/style.css">
+<link rel="stylesheet" type="text/css" href="../resources/home/css/font-awesome.min.css">
+<link rel="apple-touch-icon-precomposed" href="../resources/home/images/icon.png">
+<link rel="shortcut icon" href="../resources/home/images/favicon.ico">
+<script src="../resources/home/js/jquery-2.1.4.min.js"></script>
+<script src="../resources/home/js/nprogress.js"></script>
+<script src="../resources/home/js/jquery.lazyload.min.js"></script>
+<!--[if gte IE 9]>
+  <script src="../resources/home/js/jquery-1.11.1.min.js" type="text/javascript"></script>
+  <script src="../resources/home/js/html5shiv.min.js" type="text/javascript"></script>
+  <script src="../resources/home/js/respond.min.js" type="text/javascript"></script>
+  <script src="../resources/home/js/selectivizr-min.js" type="text/javascript"></script>
+<![endif]-->
+
+</head>
+<body class="user-select" >
+<header class="header">
+<nav class="navbar navbar-default" id="navbar">
+<div class="container">
+  <div class="header-topbar hidden-xs link-border">
+	<!-- <ul class="site-nav topmenu">
+		<li><a href="/XtuGraduate/system/userlogin"  title="登陆" >登陆</a></li>
+		<li>|</li>
+		<li><a href="/XtuGraduate/system/register"  title="注册" >注册</a></li>
+	</ul> -->
+  </div>
+  <div class="navbar-header">
+	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-navbar" aria-expanded="false"> <span class="sr-only"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+	<h1 class="logo hvr-bounce-in"><a href="/XtuGraduate/index/index" title="湘潭大学研招资讯网站"><img src="../resources/home/images/logo.jpg" alt="湘潭大学研招资讯网站"></a></h1>
+  	<ul class="nav navbar-nav navbar-right">
+	  <li><a data-cont="湘潭大学研招资讯网站" title="湘潭大学研招资讯网站" href="/XtuGraduate/index/index">首页</a></li>
+	  <c:forEach items="${newsCategoryList }" var="newsCategory">
+	  <li><a data-cont="${newsCategory.name }" title="${newsCategory.name }" href="../news/category_list?cid=${newsCategory.id }">${newsCategory.name }</a></li>
+	  </c:forEach>
+	  <li><a data-cont="导师信息" title="导师信息" href="../teacher/index">导师信息</a></li>
+	  <li><a data-cont="论坛交流" title="论坛交流" href="/XtuGraduate/forum/cate">论坛交流</a></li>
+	</ul>
+  </div>
+  
+  <div class="collapse navbar-collapse" id="header-navbar">
+  <!-- 
+	<form class="navbar-form visible-xs" action="../news/search_list" method="get">
+	  <div class="input-group">
+		<input type="text" name="keyword" class="form-control" placeholder="请输入关键字" maxlength="20" autocomplete="off" value="${keyword }">
+		<span class="input-group-btn">
+		<button class="btn btn-default btn-search" name="search" type="submit">搜索</button>
+		</span> </div>
+	</form> -->
+	<!-- <ul class="nav navbar-nav navbar-right">
+	  <li><a data-cont="湘潭大学研招资讯网站" title="湘潭大学研招资讯网站" href="/XtuGraduate/index/index">首页</a></li>
+	  <c:forEach items="${newsCategoryList }" var="newsCategory">
+	  <li><a data-cont="${newsCategory.name }" title="${newsCategory.name }" href="../news/category_list?cid=${newsCategory.id }">${newsCategory.name }</a></li>
+	  </c:forEach>
+	</ul> -->
+	<c:if test= "${user.username ==null}">
+	<ul class="nav navbar-nav navbar-right" id=pre>
+		<li><a href="/XtuGraduate/system/userlogin"  title="登陆" id=login >登陆</a></li>
+		<li><a href="/XtuGraduate/system/register"  title="注册" id=reg >注册</a></li>
+	</ul>
+	</c:if>
+	<c:if test= "${user.username !=null}">
+	<ul class="nav navbar-nav navbar-right" id=ed>
+		<li><a href="../user/info"  title="个人信息" id=userInfo >${user.nickname}</a></li>
+		<li><a href="/XtuGraduate/index/userlogout"  title="退出" id=logout >退出</a></li>
+	</ul>
+	</c:if>
+  </div>
+</div>
+</nav>
+</header>

@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+.zmnav{padding-left:30px;text-align:left;margin-bottom:30px;}
+.zmnav li{margin-bottom:5px;}
+.zmnav b{display: inline-block;background:#900;margin-right:10px;line-height: 22px; margin-top:5px;color:#FFF;padding:5px;}
+.zmnav a{display: inline-block;color:#2D5299;  border:1px solid #CCC; padding: 0 5px 0 3px; margin-top:5px;line-height: 20px;}
+.zmnav a:hover{text-decoration:none;  border:1px solid #900;}
+.fieldandcss{}
+.zmnav .changefieldandcss{background:#900; border:1px solid :#900;color:#FFF}
+.newslist{overflow: hidden;  margin-top:10px;border-bottom:none; padding-bottom:30px; }
+.newslist h2{ color:#003770; text-align:left; font-size:16px; font-weight:bold; margin:20px 30px 20px 20px; border-bottom: 1px solid #003770;padding: 0px 15px 10px; background: url(list_title.png) no-repeat left 0px;line-height: 25px;}
+.newslist ul{ margin-bottom:20px; border-bottom:1px dotted #BBB; padding-bottom:10px; border-top:none; padding-left:0px;margin:10px 15px;} 
+.newslist ul li{text-indent:15px; font-size:16px; line-height:200%; list-style:none;}
+.jslist{ overflow:hidden;}
+.jslist ul{padding:0;width:650px;margin:0 auto; overflow:hidden; border-bottom:1px dashed #D9D9D9;padding-bottom:10px;margin-bottom:20px;}
+.jslist li{ background:none; text-align:center;width:20%;float:left; text-indent:0;}
+.jslist li img{width:104px;height:135px;border:1px solid #D9D9D9;padding:3px;clear: both;display: block;margin: auto;}
+.jslist li a{ display:block; margin-bottom:5px;width:104px;}

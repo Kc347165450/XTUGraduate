@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ischoolbar.programmer.dao.teacher.TeacherCommentDao">
+	<!-- 多表联合查询 -->
+	<resultMap type="TeacherComment" id="commentMap">
+		<id column="c_id" property="id" />
+		<result column="c_nickname" property="nickname" />
+		<result column="c_teacherId" property="teacherId" />
+		<result column="c_content" property="content" />
+		<result column="c_createTime" property="createTime" />
+		<association property="teacher" javaType="Teacher">
+			<id column="t_id" property="id" />
+			<result column="t_academyId" property="academyId" />
+			<result column="t_tel" property="tel" />
+			<result column="t_email" property="email" />
+			<result column="t_departmentId" property="departmentId" />
+			<result column="t_teacherName" property="teacherName" />
+			<result column="t_photo" property="photo" />
+			<result column="t_content" property="content" />
+			<result column="t_commentNumber" property="commentNumber" />
+		</association>
+	</resultMap>
+	<!-- 添加评论-->
+	<insert id="add" parameterType="TeacherComment">
+		insert into teacherComment(id,teacherId,nickname,content,createTime) values(null,#{teacherId},#{nickname},#{content},#{createTime})
+	</insert>
+	<!-- 修改评论
+	<update id="edit" parameterType="Comment">
+		update comment set newsId = #{newsId}, nickname = #{nickname},content = #{content} where id = #{id}
+	</update>-->
+	<!-- 批量删除评论-->
+	<delete id="delete" parameterType="String">
+		delete from teacherComment where id in(${value}) 
+	</delete>
+	<!-- 分页获取评论列表 -->
+	<select id="findList" parameterType="Map" resultMap="commentMap">
+		select t.id as t_id,t.academyId as n_academyId,t.teacherName as t_teacherName,t.tel as t_tel,t.email as t_email,t.content as t_content,t.commentNumber as t_commentNumber,
+		c.id as c_id,c.teacherId as c_teacherId,c.nickname as c_nickname,c.content as c_content,c.createTime as c_createTime  
+		from teacher t,teacherComment c where t.id = c.teacherId 
+		<if test="nickname != null">
+			and c.nickname like '%${nickname}%' 
+		</if>
+		<if test="teacherId != null">
+			and c.teacherId = #{teacherId}  
+		</if>
+		<if test="content != null">
+			and c.content like '%${content}%' 
+		</if>
+		order by c.createTime desc 
+		<if test="offset != null and pageSize != null">
+			limit #{offset},#{pageSize}
+		</if>
+	</select>
+	<!-- 获取所有分类列表 -->
+	<select id="findAll" parameterType="Map" resultType="TeacherComment">
+		select * from teacherComment order by createTime desc 
+	</select>
+	<!-- 获取符合结果的总记录数 -->
+	<select id="getTotal" parameterType="Map" resultType="Integer">
+		select count(*) from teacherComment where 1 = 1 
+		<if test="nickname != null">
+			and nickname like '%${nickname}%' 
+		</if>
+		<if test="content != null">
+			and content like '%${content}%' 
+		</if>
+	</select>
+</mapper>

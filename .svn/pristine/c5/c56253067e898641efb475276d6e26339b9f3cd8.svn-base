@@ -1,0 +1,206 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+
+<head>
+    <meta charset="UTF-8">
+    <link href="../resources/forum/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../resources/forum/js/jquery-3.2.1.js"></script>
+    <script src="../resources/forum/js/bootstrap.min.js"></script>
+    <title>${topic.title} - 湘大论坛 </title>
+</head>
+<!-- 引入header文件 -->
+<%@ include file="../common/header.jsp"%>
+<div style="width: 70%;margin:1% 2% 1% 5%;float: left;">
+<div class="panel panel-default" id="main" style="">
+    <div class="panel-heading" style="background-color: white">
+        <div>
+            <div class="panel-heading" style="background-color: white">
+                <a href="/XtuGraduate/forum/cate">湘大论坛</a> › 主题
+            </div>
+            <h3>${topic.title}</h3><br/>
+            <div>
+                <a href="/member/${topic.user.nickname}"><span ><strong>${topic.user.nickname}</strong></span></a>&nbsp;&nbsp;
+                <small class="text-muted">${topic.localCreateTime}&nbsp;&nbsp;&nbsp;+08:00</small>&nbsp;&nbsp;
+                <small class="text-muted">${topic.click}次点击</small>
+            </div>
+        </div>
+
+        <div style="float: right;margin-top: -100px" >
+            <img width="50px" height="50px" src="${topic.user.photo}" class="img-rounded">
+        </div>
+    </div>
+
+    <ul class="list-group" style="width: 100%">
+            <li class="list-group-item">
+                ${topic.content}
+            </li>
+    </ul>
+</div>
+
+<c:if test="${!empty replies}">
+<div class="panel panel-default" id="main" style="">
+    <div class="panel-heading" style="background-color: white">
+        <span>
+                ${fn:length(replies)} 回复  |  直到 <c:forEach items="${replies}" var="reply" varStatus="status">
+
+<c:if test="${status.last}">
+    ${reply.localCreateTime}
+    </c:if>
+    </c:forEach>
+    </span>
+    </div>
+    <!-- 
+    <ul id="reply_list" class="list-group" style="width: 100%">
+    </ul>
+     -->
+	<!-- 遍历评论-->
+    <ul id="reply_list" class="list-group" style="width: 100%">
+        <c:forEach items="${replies}" var="reply">
+        <li class="list-group-item">
+            <div style="height: 50px">
+                <div style="float: left;width: 6%;margin-bottom: 5px">
+                    <img width="50px" height="50px" src="${reply.user.photo} " class="img-rounded">
+                </div>
+                <div style="width: 89%;float: left">
+                    <a href="/member/${reply.user.id}"><strong>${reply.user.nickname}</strong></a>&nbsp;&nbsp;
+                    <small class="text-muted">${reply.localCreateTime}</small>
+                    <br/>
+                    <div>
+                        <p>${reply.content}</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        </c:forEach>
+    </ul>
+      
+</div>
+</c:if>
+<c:if test="${empty user}">
+<h3><a href="/XtuGraduate/system/userlogin"  title="登陆" id=login >登陆</a>后可回复</h3>
+</c:if>
+<c:if test="${!empty user}">
+
+<div class="panel panel-default" id="main" style="">
+    <div class="panel-heading" style="background-color: white">
+        添加一条新回复
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <form id="reply-form" name="reply-form" action="../reply/add" method="post">
+                <input type="hidden" name="topicId" value="${topic.id}">
+                <input type="hidden" name="replyUserId" value="${user.id}">
+                <textarea id="reply-textarea" class="form-control" rows="3" name="content" required="required"></textarea><br/>
+            	<!-- <button type="button" id="reply-submit" class="btn btn-default btn-sm">回复</button> -->
+            	<input type="submit" id="reply-submit" class="btn btn-default btn-sm" value="回复">
+            </form>
+        </div>
+
+    </div>
+</div>
+</c:if>
+
+</div>
+<!-- 引入侧边栏文件 -->
+
+<!-- 引入footer文件 -->
+
+<script>
+
+var page = 1;
+
+$(document).ready(function(){
+	$("body").addClass('single');
+	//评论文章
+	/*
+	$("#reply-submit").click(function(){
+		if($("#reply-textarea").val() == ''){
+			alert('请填写内容！');
+			return;
+		}
+		$.ajax({
+			url:'../reply/add',
+			type:'post',
+			data:$("#reply-form").serialize(),
+			dataType:'json',
+			success:function(data){
+				if(data.type == 'success'){
+					var li = '<li class="list-group-item">';
+					li += '<div style="height: 50px">';
+		            li += '<div style="float: left;width: 6%;margin-bottom: 5px">';
+	                li += '<img width="50px" height="50px" src="'+${reply.user.photo}+'" class="img-rounded"></div>'
+	                li += '<div style="width: 89%;float: left">';
+	                li += '<a href="/member/'+${reply.user.username}+'"><strong>'+${reply.user.username}+'</strong></a>&nbsp;&nbsp;';
+	                li += '<small class="text-muted">'+${reply.localCreateTime}+'</small><br/>';
+	                li += '<div><p>'+${reply.content}+'</p></div>';    
+	                li += '</div></div></li><ul>';    
+					$("#reply_list").append(li); 
+					$("#reply-textarea").val('');
+				}else{
+					alert(data.msg);
+				}
+			}
+		});
+	});
+	*/
+	//异步加载评论内容
+	$.ajax({
+		url:'../reply/get_reply_list',
+		type:'post',
+		data:{rows:10,page:page++,topicId:'${topic.id}'},
+		dataType:'json',
+		success:function(data){
+			if(data.type == 'success'){
+				var replyList = data.replyList;
+				var html = '';
+				for(var i=0;i<replyList.length;i++){
+					var li = '<li class="list-group-item">';
+					li += '<div style="height: 50px">';
+		            li += '<div style="float: left;width: 6%;margin-bottom: 5px">';
+	                li += '<img width="50px" height="50px" src="'+${reply.user.photo}+'" class="img-rounded"></div>'
+	                li += '<div style="width: 89%;float: left">';
+	                li += '<a href="/member/'+${reply.user.username}+'"><strong>'+${reply.user.username}+'</strong></a>&nbsp;&nbsp;';
+	                li += '<small class="text-muted">'+${reply.localCreateTime}+'</small><br/>';
+	                li += '<div><p>'+${reply.content}+'</p></div>';    
+	                li += '</div></div></li>';
+	                html += li;
+				}
+				$("#reply_list").append(html);
+			}
+		}
+	});
+	/*
+	$("#load-more-comment-btn").click(function(){
+		if($("#load-more-comment-btn").attr('data-key') == 'all')return;
+		$("#load-more-comment-btn").text('查看更多评论');
+		//异步加载评论内容
+		$.ajax({
+			url:'../news/get_comment_list',
+			type:'post',
+			data:{rows:10,page:page++,newsId:'${news.id}'},
+			dataType:'json',
+			success:function(data){
+				if(data.type == 'success'){
+					
+					var commentList = data.commentList;
+					$("#load-more-comment-btn").text('查看更多评论!');
+					if(commentList.length == 0){
+						$("#load-more-comment-btn").text('没有更多了!');
+						$("#load-more-comment-btn").attr('data-key','all');
+					}
+					var html = '';
+					for(var i=0;i<commentList.length;i++){
+						var li = '<li class="comment-content"><span class="comment-f">#' + ($("#comment_list").children('li').length + i + 1);
+					    li += '</span><div class="comment-main"><p><a class="address" href="#" rel="nofollow" target="_blank">'+commentList[i].nickname+'</a><span class="time">('+format(commentList[i].createTime)+')</span><br>'+commentList[i].content+'</p></div></li></ol>';
+						html += li;
+					}
+					$("#comment_list").append(html);
+				}
+			}
+		});
+	});
+	
+});	*/
+</script>

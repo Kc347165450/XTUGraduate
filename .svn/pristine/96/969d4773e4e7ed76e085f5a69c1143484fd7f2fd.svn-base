@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ischoolbar.programmer.dao.forum.ReplyDao" >
+
+  <!--  评论信息   -->
+  <resultMap id="replyAndUser" type="Reply" >
+    <id column="id" property="id" />
+    <result column="topic_id" property="topicId"  />
+    <result column="reply_user_id" property="replyUserId"  />
+    <result column="create_time" property="createTime"  />
+    <result column="update_time" property="updateTime" />
+    <result column="device" property="device" />
+    <result column="content" property="content"  />
+    <association property="user" javaType="User">
+      <id column="id" property="id" />
+      <result column="nickname" property="nickname"  />
+      <result column="photo" property="photo"/>
+    </association>
+  </resultMap>
+
+
+
+  <select id="getRepliesOfTopic" resultMap="replyAndUser" parameterType="Integer" >
+  SELECT reply.*,user.id,user.nickname,user.photo
+  from reply,user
+  where reply.reply_user_id = user.id and reply.topic_id = #{topicId}
+  order by create_time ASC ;
+  </select>
+
+  <select id="getRepliesNum" resultType="Integer" parameterType="Integer" >
+    SELECT count(id)
+    FROM reply
+    WHERE topic_id = #{topicId}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="Long" >
+    delete from reply
+    where id = #{id}
+  </delete>
+
+  <insert id="insert" parameterType="Reply" >
+    insert into reply (id,topic_id, reply_user_id,
+      create_time, update_time,
+      content)
+    values ( null,#{topicId}, #{replyUserId},
+      #{createTime}, #{updateTime},
+      #{content})
+  </insert>
+
+
+</mapper>

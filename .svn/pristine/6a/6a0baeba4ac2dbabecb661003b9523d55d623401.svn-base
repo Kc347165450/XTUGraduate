@@ -1,0 +1,14 @@
+package com.ischoolbar.programmer.service.forum;
+
+
+import com.ischoolbar.programmer.entity.forum.Tab;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+@Service
+public interface TabService {
+    List<Tab> getAllTabs();
+
+    Tab getByTabNameEn(String tabName);
+}

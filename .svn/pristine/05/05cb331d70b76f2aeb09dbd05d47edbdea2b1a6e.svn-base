@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ischoolbar.programmer.dao.teacher.TeacherDao">
+	<!-- 添加导师信息 -->
+	<insert id="add" parameterType="Teacher">
+		insert into teacher(id,tercherName,academyId,departmentId,photo,tel,email,information) values(null,#{tercherName},#{academyId},#{departmentId},#{photo},#{tel},#{email},#{information})
+	</insert>
+	<!-- 修改导师信息 -->
+	<update id="edit" parameterType="Teacher">
+		update teacher set categoryId = #{categoryId}, title = #{title},author = #{author},content = #{content} where id = #{id}
+	</update>
+	<!-- 删除导师信息 -->
+	<delete id="delete" parameterType="Long">
+		delete from teacher where id = ${value}
+	</delete>
+	<!-- 分页获取导师信息列表 
+	<select id="findList" parameterType="Map" resultMap="newsMap">
+		select n.id as n_id,n.categoryId as n_categoryId,n.title as n_title,n.author as n_author,n.content as n_content,n.viewNumber as n_viewNumber,n.commentNumber as n_commentNumber,n.createTime as n_createTime,
+		nc.id as nc_id,nc.name as nc_name,nc.sort as nc_sort 
+		from teacher t
+		<if test="title != null">
+			and n.title like '%${title}%' 
+		</if>
+		<if test="author != null">
+			and n.author like '%${author}%' 
+		</if>
+		<if test="categoryId != null">
+			and n.categoryId = #{categoryId}  
+		</if>
+		order by createTime desc 
+		<if test="offset != null and pageSize != null">
+			limit #{offset},#{pageSize}
+		</if>
+	</select>-->
+	<!-- 获取单条导师信息记录
+	<select id="find" parameterType="Long" resultMap="newsMap">
+		select n.id as n_id,n.categoryId as n_categoryId,n.title as n_title,n.author as n_author,n.content as n_content,n.viewNumber as n_viewNumber,n.commentNumber as n_commentNumber,n.createTime as n_createTime,
+		nc.id as nc_id,nc.name as nc_name,nc.sort as nc_sort 
+		from teacher n,news_category nc where n.categoryId = nc.id and n.id = #{value} 
+	</select> -->
+	<!-- 获取符合结果的总记录数 
+	<select id="getTotal" parameterType="Map" resultType="Integer">
+		select count(*) from teacher where 1 = 1 
+		<if test="title != null">
+			and title like '%${title}%' 
+		</if>
+		<if test="author != null">
+			and author like '%${author}%' 
+		</if>
+		<if test="categoryId != null">
+			and categoryId = #{categoryId}  
+		</if>
+	</select>-->
+	<!-- 修改新闻评论数量 
+	<update id="updateCommentNumber" parameterType="Long">
+		update news set commentNumber = commentNumber + 1 where id = #{id}
+	</update>-->
+	<!-- 修改新闻浏览数量
+	<update id="updateViewNumber" parameterType="Long">
+		update news set viewNumber = viewNumber + 1 where id = #{id}
+	</update>
+	 -->
+</mapper>

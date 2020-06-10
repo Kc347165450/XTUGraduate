@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ischoolbar.programmer.dao.teacher.DepartmentDao">
+	<!--  某专业所有导师信息   -->
+	  <resultMap id="DepartmentChild" type="Department" >
+	    <id column="d_id" property="id" />
+	    <result column="d_academyId" property="academyId"  />
+	    <result column="d_Name" property="departmentName"  />
+	    <association property="teacher" javaType="Teacher">
+	      <id column="t_id" property="id" />
+	      <result column="t_Name" property="teacherName"  />
+	      <result column="t_photo" property="photo"  />
+	      <result column="t_tel" property="tel"  />
+	      <result column="t_email" property="email"  />
+	      <result column="t_info" property="information"  />
+	      <result column="t_commentNum" property="commentNumber"  />
+	    </association>
+	  </resultMap>
+	  <!-- 专业及学院信息 -->
+	  <resultMap id="departmentMap" type="Department" >
+	  	<id column="d_id" property="id" />
+	  	<result column="d_academyId" property="academyId"  />
+	    <result column="d_Name" property="departmentName"  />
+	    <association property="academy" javaType="Academy">
+	    	<id column="a_id" property="id" />
+	  		<result column="a_academyName" property="academyName"  />
+	    </association>
+	  </resultMap>
+	
+	<!-- 专业插入操作 -->
+	<insert id="add" parameterType="Department">
+		insert into department(id,academyId,departmentName) values(null,#{academyId},#{departmentName})
+	</insert>
+	<!-- 根据专业id获取专业信息 -->
+	<select id="findListByIds" parameterType="String" resultType="Department">
+		select * from department where id in(${value})
+	</select>
+	<!-- 修改专业信息 -->
+	<update id="edit" parameterType="Department">
+		update department 
+		set academyId = #{academyId},departmentName = #{departmentName}
+		where id = #{id}
+	</update>
+	<!-- 删除专业信息 -->
+	<delete id="delete" parameterType="Long">
+		delete from department where id = #{id}
+	</delete>
+	<!-- 获取所有专业列表 -->
+	<select id="findAll" parameterType="Map" resultType="Department">
+		select * from department order by id desc 
+	</select>
+	<!-- 专业信息模糊分页搜索查询 -->
+	<select id="findList" parameterType="Map" resultMap="departmentMap">
+		select d.id as d_id,d.departmentName as d_Name,a.academyName as a_academyName
+		from department d,academy a
+		where d.academyId = a.id
+		<if test="academyId != null">
+			and d.academyId = #{academyId}  
+		</if>
+		 <!-- 
+		<if test="academyId != null">
+			and academyId = #{academyId}  
+		</if>
+		<if test="departmentName != null">
+			and departmentName like '%${departmentName}%' 
+		</if>
+		 -->
+		<if test="offset != null and pageSize != null">
+			limit #{offset},#{pageSize}
+		</if>
+	</select>
+	<!-- 菜单信息模糊分页搜索查询总记录数 -->
+	<select id="getTotal" parameterType="Map" resultType="Integer">
+		select count(*) from department where 1 = 1  
+		<if test="academyId != null">
+			and academyId = #{academyId}  
+		</if>
+		<if test="departmentName != null">
+			and departmentName like '%${departmentName}%' 
+		</if>
+	</select>
+	<select id="findChildernList" parameterType="int" resultMap="DepartmentChild">
+		select department.id as d_id,department.academyId as d_academyId,department.departmentName,
+		teacher.id as t_id,teacher.teacherName as t_Name,teacher.photo as t_photo,teacher.tel as t_tel,teacher.email as t_email,teacher.information as t_info,teacher.commentNumber as t_commentNum 
+		from department d,teacher t
+		where d.academyId = #{id} and t.academyId = #{id}
+		<if test="academyId != null">
+			and t.academyId = #{academyId}  
+		</if>
+		<if test="offset != null and pageSize != null">
+			limit #{offset},#{pageSize}
+		</if>
+	</select>
+</mapper>

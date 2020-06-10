@@ -1,0 +1,25 @@
+package com.ischoolbar.programmer.service.forum.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ischoolbar.programmer.dao.forum.TabDao;
+import com.ischoolbar.programmer.entity.forum.Tab;
+import com.ischoolbar.programmer.service.forum.TabService;
+
+import java.util.List;
+
+@Service
+public class TabServiceImpl implements TabService {
+
+    @Autowired
+    public TabDao tabDao;
+
+    public List<Tab> getAllTabs() {
+        return tabDao.getAllTabs();
+    }
+
+    public Tab getByTabNameEn(String tabNameEn) {
+        return tabDao.getByTabNameEn(tabNameEn);
+    }
+}

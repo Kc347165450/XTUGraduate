@@ -1,0 +1,394 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+
+		<!-- General CSS Files -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.8.2/css/all.min.css">
+
+		<!-- Template CSS -->
+		<link rel="stylesheet" href="../resources/user/css/style-blue.css">
+		<link rel="stylesheet" href="../resources/user/css/components.css">
+
+		<!-- Custom CSS -->
+		<link rel="stylesheet" href="../resources/user/css/malio.css">
+
+		<script>
+		</script>
+		<title>个人主页 &mdash; 湘大研讯</title>
+
+		<style>
+			.card-large-icons p {
+				font-weight: 400;
+			}
+			.card-large-icons {
+			  width: 100%;
+			}
+  </style>
+	</head>
+
+	<body>
+		<div id="app">
+			<div class="main-wrapper">
+				<div class="navbar-bg"></div>
+				<nav class="navbar navbar-expand-lg main-navbar">
+					<form class="form-inline mr-auto">
+						<ul class="navbar-nav mr-3">
+						</ul>
+					</form>
+					<ul class="navbar-nav navbar-right">
+						<li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+								<div class="d-sm-none d-lg-inline-block">Hi, <span class="__cf_email__">${user.nickname }</span></div>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right">
+								<a href="/user/info" class="dropdown-item has-icon">
+									<i class="fas fa-user"></i> 我的账号
+								</a>
+								<div class="dropdown-divider"></div>
+								<a href="/XtuGraduate/index/userlogout" class="dropdown-item has-icon text-danger">
+									<i class="fas fa-sign-out-alt"></i> 退出登录
+								</a>
+							</div>
+						</li>
+					</ul>
+				</nav>
+				<div class="main-sidebar sidebar-style-2">
+					<aside id="sidebar-wrapper">
+						<div class="sidebar-brand">
+							<a href="/XtuGraduate/index/index">湘大研讯</a>
+						</div>
+						<div class="sidebar-brand sidebar-brand-sm">
+							<a href="/XtuGraduate/index/index">XTU</a>
+						</div>
+						<ul class="sidebar-menu">
+							<li class="menu-header">页面</li>
+							<li><a class="nav-link" href="/XtuGraduate/index/index"><i class="fas fa-home"></i> <span>研讯主页</span></a></li>
+							<li class="menu-header">我的</li>
+							<li><a class="nav-link" href="../user/info"><i class="fab fa-fort-awesome"></i> <span>用户中心</span></a></li>
+							<li><a class="nav-link" href="../user/topic"><i class="fas fa-book"></i> <span>帖子管理</span></a></li>
+							<li><a class="nav-link" href="../user/comment"><i class="fas fa-fire" ></i> <span>新闻评论管理</span></a></li>
+							<li class="menu-header">设置</li>
+							<li>
+								<a href="../user/update" class="nav-link "><i class="fas fa-user"></i> <span>个人信息设置</span></a>
+							</li>
+						</ul>
+					</aside>
+				</div>
+				<!-- Main Content -->
+				<div class="main-content">
+					<section class="section">
+						<div class="section-header">
+							<h1>我的账号</h1>
+						</div>
+						<div class="section-body">
+							<div class="row mt-sm-4">
+								<div class="col-lg-6">
+									<div class="card card-large-icons">
+										<div class="card-icon bg-primary text-white">
+											<i class="fas fa-lock"></i>
+										</div>
+										<div class="card-body">
+											<h4>修改密码</h4>
+											<p>定期修改为高强度密码以保护您的账号</p>
+											<a href="##" class="card-cta" data-toggle="modal" data-target="#change-password-modal">立即修改 <i class="fas fa-chevron-right"></i></a>
+										</div>
+									</div>
+									<div class="card card-large-icons">
+										<div class="card-icon bg-primary text-white">
+											<i class="fas fa-user"></i>
+										</div>
+										<div class="card-body">
+											<h4>更新信息</h4>
+											<p>修改昵称、年龄、性别</p>
+											<a href="##" class="card-cta" data-toggle="modal" data-target="#change-user-modal">立即修改 <i class="fas fa-chevron-right"></i></a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+
+		<!-- General JS Scripts -->
+		<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/tooltip.js@1.3.2/dist/umd/tooltip.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/jquery.nicescroll@3.7.6/jquery.nicescroll.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/moment@2.18.1/min/moment.min.js"></script>
+
+		<!-- JS Libraies -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.25.6/dist/sweetalert2.all.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bowser@1.9.4/bowser.min.js"></script>
+
+		<script src="//cdn.jsdelivr.net/npm/jquery-qrcode2@1.0.0/dist/jquery-qrcode.min.js"></script>
+	</body>
+	<div class="modal fade" tabindex="-1" role="dialog" id="change-user-modal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">修改个人信息</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label>昵称</label>
+						<input id="nickname" type="text" class="form-control" value="${user.nickname }">
+						<div class="invalid-feedback">
+					      	请填写昵称(2~8位)
+					    </div>
+					</div>
+					<div class="form-group">
+						<label>年龄</label>
+						<input id="age" type="number" class="form-control" value="${user.age }">
+						<div class="invalid-feedback">
+					     	 年龄必须是100以内的数字
+					    </div>
+					</div>
+					<div class="form-group">
+						<label>性别</label>
+						<input type="radio"  name="sex" value="0" <c:if test="${user.sex == 0 }">checked</c:if> />保密
+						<input type="radio"  name="sex" value="1" <c:if test="${user.sex == 1 }">checked</c:if> />男
+						<input type="radio"  name="sex" value="2" <c:if test="${user.sex == 2 }">checked</c:if> />女
+					</div>
+				</div>
+				<div class="modal-footer bg-whitesmoke br">
+					<button type="button" class="btn btn-primary" id="updateUser">确定</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" tabindex="-1" role="dialog" id="change-password-modal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">修改账号密码</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label>原密码</label>
+						<input id="oldpwd" type="password" class="form-control">
+						<div class="invalid-feedback">
+                      		   密码必须在8~16位之间
+                     	 </div>
+					</div>
+					<div class="form-group">
+						<label>新密码</label>
+						<input id="pwd" type="password" class="form-control">
+						<div class="invalid-feedback">
+                      		   密码必须在8~16位之间
+                     	 </div>
+					</div>
+					<div class="form-group">
+						<label>再次输入新密码</label>
+						<input id="repwd" type="password" class="form-control">
+						<div class="invalid-feedback">
+                      		   两次密码不一致
+                      	</div>
+					</div>
+				</div>
+				<div class="modal-footer bg-whitesmoke br">
+					<button type="button" class="btn btn-primary" id="updatePwd">确定</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+	function hasClass(elem, cls) {
+		 cls = cls || '';
+		 if (cls.replace(/\s/g, '').length == 0) return false; //当cls没有参数时，返回false
+		 return new RegExp(' ' + cls + ' ').test(' ' + elem.className + ' ');
+	}
+		 
+	function addClass(ele, cls) {
+		  if (!hasClass(ele, cls)) {
+		    ele.className = ele.className == '' ? cls : ele.className + ' ' + cls;
+		  }
+	}
+		 
+	function removeClass(ele, cls) {
+		 if (hasClass(ele, cls)) {
+		    var newClass = ' ' + ele.className.replace(/[\t\r\n]/g, '') + ' ';
+		    while (newClass.indexOf(' ' + cls + ' ') >= 0) {
+		      newClass = newClass.replace(' ' + cls + ' ', ' ');
+		    }
+		    ele.className = newClass.replace(/^\s+|\s+$/g, '');
+		 }
+	}
+	$(function () {
+		var flagPass=false;
+        var flagPassNew=false;
+        var flagPassRe=false;
+        var flagNickname=false;
+        var flagAge=false;
+        
+        var password,newPassword,newPasswordRe,nickname,age;
+        /*验证昵称*/
+        $("#nickname").change(function(){
+        	nickname=$("#nickname").val();
+            if(nickname.length<2 || nickname.length>8){
+                $("#nickname").removeClass("form-control is-valid")
+                $("#nickname").addClass("form-control is-invalid");
+                flagNickname=false;
+            }else{
+                $("#nickname").removeClass("form-control is-invalid")
+                $("#nickname").addClass("form-control is-valid");
+                flagNickname=true;
+            }
+        })
+        /*验证年龄*/
+        $("#age").change(function(){
+        	age=$("#age").val();
+            if(isNaN(age) || age >100 || age<0){
+                $("#age").removeClass("form-control is-valid")
+                $("#age").addClass("form-control is-invalid");
+                flagAge=false;
+            }else{
+                $("#age").removeClass("form-control is-invalid")
+                $("#age").addClass("form-control is-valid");
+                flagAge=true;
+            }
+        })
+        /*验证旧密码*/
+        $("#oldpwd").change(function(){
+        	password=$("#oldpwd").val();
+            if(password.length<8||password.length>16){
+                $("#oldpwd").removeClass("form-control is-valid")
+                $("#oldpwd").addClass("form-control is-invalid");
+                flagPass=false;
+            }else{
+                $("#oldpwd").removeClass("form-control is-invalid")
+                $("#oldpwd").addClass("form-control is-valid");
+                flagPass=true;
+            }
+        })
+        /*验证新密码*/
+        $("#pwd").change(function(){
+        	newPassword=$("#pwd").val();
+            if(newPassword.length<8||newPassword.length>16){
+                $("#pwd").removeClass("form-control is-valid")
+                $("#pwd").addClass("form-control is-invalid");
+                flagPassNew=false;
+            }else{
+                $("#pwd").removeClass("form-control is-invalid")
+                $("#pwd").addClass("form-control is-valid");
+                flagPassNew=true;
+            }
+        })
+        /*验证新密码确认*/
+        $("#repwd").change(function(){
+        	newPasswordRe=$("#repwd").val();
+            if(newPasswordRe != newPassword){
+                $("#repwd").removeClass("form-control is-valid")
+                $("#repwd").addClass("form-control is-invalid");
+                flagPassRe=false;
+            }else{
+                $("#repwd").removeClass("form-control is-invalid")
+                $("#repwd").addClass("form-control is-valid");
+                flagPassRe=true;
+            }
+        })
+        $("#updatePwd").click(function(){
+        	var flag = false;
+        	var password = $("#oldpwd").val();
+    		var newPassword = $("#pwd").val();
+    		var newPasswordre = $("#repwd").val();
+            if(flagPass&&flagPassNew&&flagPassRe){
+                flag = true;
+            }else{
+                if(!flagPass){
+                    $("#oldpwd").addClass("form-control is-invalid");
+                }
+                if(!flagPassNew){
+                    $("#pwd").addClass("form-control is-invalid");
+                }
+                if(!flagPassRe){
+                    $("#repwd").addClass("form-control is-invalid");
+                }
+                flag = false;
+            }
+            if(flag){
+            	$.ajax({
+        			url:'update_pwd',
+        			type:'POST',
+        			data:{password:password,newPassword:newPassword},
+        			dataType:'json',
+        			async:false,
+        			success:function(data){
+        				if(data.type == 'success'){
+        					alert("修改成功，跳转到登陆页面");
+      						window.location.href = '../system/userlogin';
+        				}else{
+        					alert(data.msg);
+        				}
+        			}
+        		});
+            }
+            else{
+            	swal({
+		              type: 'error',
+		              showCloseButton: true,
+		              text: "请检查输入"
+		            })
+            }
+        })
+        $("#updateUser").click(function(){
+        	var flag = false;
+        	var nickname = $("#nickname").val();
+    		var sex = $("input[type='radio']:checked").val();
+    		var age = $("#age").val();
+            if(flagNickname&&flagAge){
+                flag = true;
+            }else{
+                if(!flagNickname){
+                    $("#nickname").addClass("form-control is-invalid");
+                }
+                if(!flagAge){
+                    $("#age").addClass("form-control is-invalid");
+                }
+                flag = false;
+            }
+            if(flag){
+            	$.ajax({
+        			url:'update_info',
+        			type:'POST',
+        			data:{age:age,nickname:nickname,sex:sex},
+        			dataType:'json',
+        			async:false,
+        			success:function(data){
+        				if(data.type == 'success'){
+        					swal({
+	        	                  type: 'success',
+	        	                  title: '提示',
+	        	                  showCloseButton: true,
+	        	                  text: data.msg
+	        	                })
+        				}else{
+        					alert(data.msg);
+        				}
+        			}
+        		});
+            }
+            else{
+            	swal({
+		              type: 'error',
+		              showCloseButton: true,
+		              text: "请检查输入"
+		            })
+            }
+        })
+    })
+</script>
+</html>

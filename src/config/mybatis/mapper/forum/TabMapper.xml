@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ischoolbar.programmer.dao.forum.TabDao" >
+
+  <resultMap id="BaseResultMap" type="com.ischoolbar.programmer.entity.forum.Tab" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="tabName" property="tabName" jdbcType="VARCHAR" />
+    <result column="tabNameEn" property="tabNameEn" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, tabName,tabNameEn
+  </sql>
+
+  <select id="getAllTabs" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    *
+    from tab
+    ORDER BY id ASC
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tab
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="getByTabNameEn" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from tab
+    where tabNameEn = #{tabNameEn,jdbcType=VARCHAR}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tab
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.ischoolbar.programmer.entity.forum.Tab" >
+    insert into tab (id, tabName)
+    values (#{id,jdbcType=INTEGER}, #{tabName,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ischoolbar.programmer.entity.forum.Tab" >
+    insert into tab
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="tabName != null" >
+        tabName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="tabName != null" >
+        #{tabName,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ischoolbar.programmer.entity.forum.Tab" >
+    update tab
+    <set >
+      <if test="tabName != null" >
+        tabName = #{tabName,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ischoolbar.programmer.entity.forum.Tab" >
+    update tab
+    set tabName = #{tabName,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 添加分类 -->
+	<insert id="add" parameterType="Tab">
+		insert into tab(id,tabName,tabNameEn) values(null,#{tabName},#{tabNameEn})
+	</insert>
+	<!-- 修改分类 -->
+	<update id="edit" parameterType="Tab">
+		update tab set tabName = #{tabName},tabNameEn = #{tabNameEn} where id = #{id}
+	</update>
+	<!-- 删除分类 -->
+	<delete id="delete" parameterType="Long">
+		delete from tab where id = ${value}
+	</delete>
+	<!-- 分页获取分类列表 -->
+	<select id="findList" parameterType="Map" resultType="Tab">
+		select * from tab where 1 = 1 
+		<if test="tabName != null">
+			and tabName like '%${tabName}%' 
+		</if>
+		order by id asc 
+		<if test="offset != null and pageSize != null">
+			limit #{offset},#{pageSize}
+		</if>
+	</select>
+	<!-- 获取所有分类列表 -->
+	<select id="findAll" parameterType="Map" resultType="Tab">
+		select * from tab order by id asc 
+	</select>
+	<!-- 获取单个分类信息 -->
+	<select id="find" parameterType="Long" resultType="Tab">
+		select * from tab where id = #{value} 
+	</select>
+	<!-- 获取符合结果的总记录数 -->
+	<select id="getTotal" parameterType="Map" resultType="Integer">
+		select count(*) from tab where 1 = 1 
+		<if test="tabName != null">
+			and tabName like '%${tabName}%' 
+		</if>
+	</select>
+</mapper>

@@ -1,0 +1,27 @@
+package com.ischoolbar.programmer.dao.forum;
+
+
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
+import com.ischoolbar.programmer.entity.forum.Tab;
+
+@Repository
+public interface TabDao {
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(Tab record);
+
+    int insertSelective(Tab record);
+
+    Tab selectByPrimaryKey(Integer id);
+
+    Tab getByTabNameEn(String tabName);
+
+    int updateByPrimaryKeySelective(Tab record);
+
+    int updateByPrimaryKey(Tab record);
+
+    List<Tab> getAllTabs();
+}

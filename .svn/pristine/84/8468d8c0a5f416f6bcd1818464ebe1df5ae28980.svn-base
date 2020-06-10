@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ischoolbar.programmer.dao.forum.ReplyDao" >
+
+  <!--  评论信息   -->
+  <resultMap id="replyAndUser" type="com.ischoolbar.programmer.entity.forum.Reply" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="topic_id" property="topicId" jdbcType="INTEGER" />
+    <result column="reply_user_id" property="replyUserId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="device" property="device" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <association property="user" javaType="com.ischoolbar.programmer.entity.admin.User">
+      <id column="id" property="id" jdbcType="INTEGER" />
+      <result column="username" property="username" jdbcType="VARCHAR" />
+      <result column="photo" property="photo" jdbcType="VARCHAR" />
+    </association>
+  </resultMap>
+
+
+
+  <select id="getRepliesOfTopic" resultMap="replyAndUser" parameterType="java.lang.Integer" >
+  SELECT reply.*,user.username,user.photo
+  from reply,user
+  where reply.reply_user_id = user.id and reply.topic_id = #{topicId,jdbcType=INTEGER}
+  order by create_time ASC ;
+  </select>
+
+  <select id="getRepliesNum" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    SELECT count(id)
+    FROM reply
+    WHERE topic_id = #{topicId,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from reply
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.ischoolbar.programmer.entity.forum.Reply" >
+    insert into reply (topic_id, reply_user_id,
+      create_time, update_time,
+      content)
+    values ( #{topicId,jdbcType=INTEGER}, #{replyUserId,jdbcType=INTEGER},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+
+
+</mapper>

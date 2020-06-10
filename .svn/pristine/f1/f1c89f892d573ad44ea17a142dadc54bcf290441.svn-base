@@ -1,0 +1,67 @@
+package com.ischoolbar.programmer.service.teacher.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ischoolbar.programmer.dao.teacher.DepartmentDao;
+import com.ischoolbar.programmer.entity.teacher.Department;
+import com.ischoolbar.programmer.service.teacher.DepartmentService;
+
+@Service
+public class DepartmentServiceImpl implements DepartmentService {
+	
+	@Autowired
+	private DepartmentDao departmentDao;
+
+	@Override
+	public int add(Department department) {
+		// TODO Auto-generated method stub
+		return departmentDao.add(department);
+	}
+
+	@Override
+	public int delete(String ids) {
+		// TODO Auto-generated method stub
+		return departmentDao.delete(ids);
+	}
+
+	@Override
+	public int edit(Department department) {
+		// TODO Auto-generated method stub
+		return departmentDao.edit(department);
+	}
+
+	@Override
+	public List<Department> findList(Map<String, Object> queryMap) {
+		// TODO Auto-generated method stub
+		return departmentDao.findList(queryMap);
+	}
+
+	@Override
+	public List<Department> findAll() {
+		// TODO Auto-generated method stub
+		return departmentDao.findAll();
+	}
+
+	@Override
+	public int getTotal(Map<String, Object> queryMap) {
+		// TODO Auto-generated method stub
+		return departmentDao.getTotal(queryMap);
+	}
+
+	@Override
+	public Department find(int id) {
+		// TODO Auto-generated method stub
+		return departmentDao.find(id);
+	}
+
+	@Override
+	public List<Department> findListByAcademyId(Long id) {
+		// TODO Auto-generated method stub
+		return departmentDao.findListByAcademyId(id);
+	}
+
+}
