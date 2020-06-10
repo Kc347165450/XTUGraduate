@@ -9,33 +9,33 @@ import java.util.Properties;
 
 public class MailUtil {
 
-	// ·¢¼şÈËµÄ ÓÊÏä ºÍ ÃÜÂë£¨Ìæ»»Îª×Ô¼ºµÄÓÊÏäºÍÃÜÂë£©
-	// PS: Ä³Ğ©ÓÊÏä·şÎñÆ÷ÎªÁËÔö¼ÓÓÊÏä±¾ÉíÃÜÂëµÄ°²È«ĞÔ£¬¸ø SMTP ¿Í»§¶ËÉèÖÃÁË¶ÀÁ¢ÃÜÂë£¨ÓĞµÄÓÊÏä³ÆÎª¡°ÊÚÈ¨Âë¡±£©,
-	//      ¶ÔÓÚ¿ªÆôÁË¶ÀÁ¢ÃÜÂëµÄÓÊÏä, ÕâÀïµÄÓÊÏäÃÜÂë±ØĞèÊ¹ÓÃÕâ¸ö¶ÀÁ¢ÃÜÂë£¨ÊÚÈ¨Âë£©¡£
-	public static String account = "18670999522@163.com";
-	public static String password = "SIIYSQHEMPUXRKQF";//ÕâÀïÎªÄãµÄÓÊÏäÊÚÈ¨Âë
+	// å‘ä»¶äººçš„ é‚®ç®± å’Œ å¯†ç ï¼ˆæ›¿æ¢ä¸ºè‡ªå·±çš„é‚®ç®±å’Œå¯†ç ï¼‰
+	// PS: æŸäº›é‚®ç®±æœåŠ¡å™¨ä¸ºäº†å¢åŠ é‚®ç®±æœ¬èº«å¯†ç çš„å®‰å…¨æ€§ï¼Œç»™ SMTP å®¢æˆ·ç«¯è®¾ç½®äº†ç‹¬ç«‹å¯†ç ï¼ˆæœ‰çš„é‚®ç®±ç§°ä¸ºâ€œæˆæƒç â€ï¼‰,
+	//      å¯¹äºå¼€å¯äº†ç‹¬ç«‹å¯†ç çš„é‚®ç®±, è¿™é‡Œçš„é‚®ç®±å¯†ç å¿…éœ€ä½¿ç”¨è¿™ä¸ªç‹¬ç«‹å¯†ç ï¼ˆæˆæƒç ï¼‰ã€‚
+	public static String account = "â€¦â€¦@163.com";
+	public static String password = "â€¦â€¦";//è¿™é‡Œä¸ºä½ çš„é‚®ç®±æˆæƒç 
 
-	// ·¢¼şÈËÓÊÏäµÄ SMTP ·şÎñÆ÷µØÖ·, ±ØĞë×¼È·, ²»Í¬ÓÊ¼ş·şÎñÆ÷µØÖ·²»Í¬, Ò»°ã(Ö»ÊÇÒ»°ã, ¾ø·Ç¾ø¶Ô)¸ñÊ½Îª: smtp.xxx.com
-	// ÍøÒ×163ÓÊÏäµÄ SMTP ·şÎñÆ÷µØÖ·Îª: smtp.163.com
+	// å‘ä»¶äººé‚®ç®±çš„ SMTP æœåŠ¡å™¨åœ°å€, å¿…é¡»å‡†ç¡®, ä¸åŒé‚®ä»¶æœåŠ¡å™¨åœ°å€ä¸åŒ, ä¸€èˆ¬(åªæ˜¯ä¸€èˆ¬, ç»éç»å¯¹)æ ¼å¼ä¸º: smtp.xxx.com
+	// ç½‘æ˜“163é‚®ç®±çš„ SMTP æœåŠ¡å™¨åœ°å€ä¸º: smtp.163.com
 	public static String myEmailSMTPHost = "smtp.163.com";
 
 	/**
-	 * ·¢ËÍÓÊ¼şµÄ·½·¨
+	 * å‘é€é‚®ä»¶çš„æ–¹æ³•
 	 * 
 	 * @param to
-	 *            ÓÊ¼şµÄ½ÓÊÕ·½
+	 *            é‚®ä»¶çš„æ¥æ”¶æ–¹
 	 * @param code
-	 *            ÓÊ¼şµÄ¼¤»îÂë
+	 *            é‚®ä»¶çš„æ¿€æ´»ç 
 	 */
 	public void sendMail(String to, String code) {
-		// 1.´´½¨Á¬½Ó¶ÔÏó£¬Á´½Óµ½ÓÊÏä·şÎñÆ÷
-		Properties props = new Properties();// ²ÎÊıÅäÖÃ
-		props.setProperty("mail.transport.protocol", "smtp");// Ê¹ÓÃµÄĞ­Òé£¨JavaMail¹æ·¶ÒªÇó£©
-		props.setProperty("mail.smtp.host", myEmailSMTPHost);// ·¢¼şÈËµÄÓÊÏäµÄ SMTP
-																// ·şÎñÆ÷µØÖ·
-		props.setProperty("mail.smtp.auth", "true");// ĞèÒªÇëÇóÈÏÖ¤
+		// 1.åˆ›å»ºè¿æ¥å¯¹è±¡ï¼Œé“¾æ¥åˆ°é‚®ç®±æœåŠ¡å™¨
+		Properties props = new Properties();// å‚æ•°é…ç½®
+		props.setProperty("mail.transport.protocol", "smtp");// ä½¿ç”¨çš„åè®®ï¼ˆJavaMailè§„èŒƒè¦æ±‚ï¼‰
+		props.setProperty("mail.smtp.host", myEmailSMTPHost);// å‘ä»¶äººçš„é‚®ç®±çš„ SMTP
+																// æœåŠ¡å™¨åœ°å€
+		props.setProperty("mail.smtp.auth", "true");// éœ€è¦è¯·æ±‚è®¤è¯
 
-		// 2.¸ù¾İÅäÖÃ´´½¨»á»°¶ÔÏó, ÓÃÓÚºÍÓÊ¼ş·şÎñÆ÷½»»¥
+		// 2.æ ¹æ®é…ç½®åˆ›å»ºä¼šè¯å¯¹è±¡, ç”¨äºå’Œé‚®ä»¶æœåŠ¡å™¨äº¤äº’
 		Session session = Session.getInstance(props, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
@@ -44,21 +44,21 @@ public class MailUtil {
 		});
 
 		try {
-			// 3.´´½¨ÓÊ¼ş¶ÔÏó
+			// 3.åˆ›å»ºé‚®ä»¶å¯¹è±¡
 			Message message = new MimeMessage(session);
-			// 3.1ÉèÖÃ·¢¼şÈË
+			// 3.1è®¾ç½®å‘ä»¶äºº
 			message.setFrom(new InternetAddress(account));
-			// 3.2ÉèÖÃÊÕ¼şÈË
+			// 3.2è®¾ç½®æ”¶ä»¶äºº
 			message.setRecipient(RecipientType.TO, new InternetAddress(to));
-			// 3.3ÉèÖÃÓÊ¼şµÄÖ÷Ìâ
-			message.setSubject("À´×ÔÏæÌ¶´óÑ§¿¼ÑĞ×ÊÑ¶ÍøµÄ¼¤»îÓÊ¼ş");
-			// 3.4ÉèÖÃÓÊ¼şµÄÕıÎÄ
-			// message.setContent("<h1>À´×ÔÖÇ»ÛµçÌİµÄ¼¤»îÓÊ¼ş£¬ÄúµÄÑéÖ¤ÂëÊÇ£º</h1><h3><a href='http://localhost:10080/Demo_JavaMail/active?code="
+			// 3.3è®¾ç½®é‚®ä»¶çš„ä¸»é¢˜
+			message.setSubject("æ¥è‡ªæ¹˜æ½­å¤§å­¦è€ƒç ”èµ„è®¯ç½‘çš„æ¿€æ´»é‚®ä»¶");
+			// 3.4è®¾ç½®é‚®ä»¶çš„æ­£æ–‡
+			// message.setContent("<h1>æ¥è‡ªæ™ºæ…§ç”µæ¢¯çš„æ¿€æ´»é‚®ä»¶ï¼Œæ‚¨çš„éªŒè¯ç æ˜¯ï¼š</h1><h3><a href='http://localhost:10080/Demo_JavaMail/active?code="
 			// + code + "'>http://localhost:10080/Demo_JavaMail/active?code=" +
 			// code + "</h3>", "text/html;charset=UTF-8");
-			message.setContent("<h1>À´×ÔÏæÌ¶´óÑ§¿¼ÑĞ×ÊÑ¶ÍøµÄ¼¤»îÓÊ¼ş£¬ÄúµÄÑéÖ¤ÂëÊÇ£º" + code,
+			message.setContent("<h1>æ¥è‡ªæ¹˜æ½­å¤§å­¦è€ƒç ”èµ„è®¯ç½‘çš„æ¿€æ´»é‚®ä»¶ï¼Œæ‚¨çš„éªŒè¯ç æ˜¯ï¼š" + code,
 					"text/html;charset=UTF-8");
-			// 4.·¢ËÍÓÊ¼ş
+			// 4.å‘é€é‚®ä»¶
 			Transport.send(message);
 		} catch (MessagingException e) {
 			e.printStackTrace();
@@ -66,22 +66,22 @@ public class MailUtil {
 	}
 
 	/**
-	 * ·¢ËÍÕÒ»ØÃÜÂëÓÊ¼şµÄ·½·¨
+	 * å‘é€æ‰¾å›å¯†ç é‚®ä»¶çš„æ–¹æ³•
 	 * 
 	 * @param to
-	 *            ÓÊ¼şµÄ½ÓÊÕ·½
+	 *            é‚®ä»¶çš„æ¥æ”¶æ–¹
 	 * @param code
-	 *            ÓÊ¼şµÄÑéÖ¤Âë
+	 *            é‚®ä»¶çš„éªŒè¯ç 
 	 */
 	public void findPasswordMail(String to, String code) {
-		// 1.´´½¨Á¬½Ó¶ÔÏó£¬Á´½Óµ½ÓÊÏä·şÎñÆ÷
-		Properties props = new Properties(); // ²ÎÊıÅäÖÃ
-		props.setProperty("mail.transport.protocol", "smtp");// Ê¹ÓÃµÄĞ­Òé£¨JavaMail¹æ·¶ÒªÇó£©
-		props.setProperty("mail.smtp.host", myEmailSMTPHost);// ·¢¼şÈËµÄÓÊÏäµÄ SMTP
-																// ·şÎñÆ÷µØÖ·
-		props.setProperty("mail.smtp.auth", "true"); // ĞèÒªÇëÇóÈÏÖ¤
+		// 1.åˆ›å»ºè¿æ¥å¯¹è±¡ï¼Œé“¾æ¥åˆ°é‚®ç®±æœåŠ¡å™¨
+		Properties props = new Properties(); // å‚æ•°é…ç½®
+		props.setProperty("mail.transport.protocol", "smtp");// ä½¿ç”¨çš„åè®®ï¼ˆJavaMailè§„èŒƒè¦æ±‚ï¼‰
+		props.setProperty("mail.smtp.host", myEmailSMTPHost);// å‘ä»¶äººçš„é‚®ç®±çš„ SMTP
+																// æœåŠ¡å™¨åœ°å€
+		props.setProperty("mail.smtp.auth", "true"); // éœ€è¦è¯·æ±‚è®¤è¯
 
-		// 2.¸ù¾İÅäÖÃ´´½¨»á»°¶ÔÏó, ÓÃÓÚºÍÓÊ¼ş·şÎñÆ÷½»»¥
+		// 2.æ ¹æ®é…ç½®åˆ›å»ºä¼šè¯å¯¹è±¡, ç”¨äºå’Œé‚®ä»¶æœåŠ¡å™¨äº¤äº’
 		Session session = Session.getInstance(props, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
@@ -90,18 +90,18 @@ public class MailUtil {
 		});
 
 		try {
-			// 3.´´½¨ÓÊ¼ş¶ÔÏó
+			// 3.åˆ›å»ºé‚®ä»¶å¯¹è±¡
 			Message message = new MimeMessage(session);
-			// 3.1ÉèÖÃ·¢¼şÈË
+			// 3.1è®¾ç½®å‘ä»¶äºº
 			message.setFrom(new InternetAddress(account));
-			// 3.2ÉèÖÃÊÕ¼şÈË
+			// 3.2è®¾ç½®æ”¶ä»¶äºº
 			message.setRecipient(RecipientType.TO, new InternetAddress(to));
-			// 3.3ÉèÖÃÓÊ¼şµÄÖ÷Ìâ
-			message.setSubject("À´×ÔÏæÌ¶´óÑ§¿¼ÑĞ×ÊÑ¶ÍøµÄÑéÖ¤ÓÊ¼ş");
-			// 3.4ÉèÖÃÓÊ¼şµÄÕıÎÄ
-			message.setContent("<h1>À´×ÔÏæÌ¶´óÑ§¿¼ÑĞ×ÊÑ¶ÍøµÄÑéÖ¤ÓÊ¼ş£¬ÄúµÄÑéÖ¤ÂëÊÇ£º" + code,
+			// 3.3è®¾ç½®é‚®ä»¶çš„ä¸»é¢˜
+			message.setSubject("æ¥è‡ªæ¹˜æ½­å¤§å­¦è€ƒç ”èµ„è®¯ç½‘çš„éªŒè¯é‚®ä»¶");
+			// 3.4è®¾ç½®é‚®ä»¶çš„æ­£æ–‡
+			message.setContent("<h1>æ¥è‡ªæ¹˜æ½­å¤§å­¦è€ƒç ”èµ„è®¯ç½‘çš„éªŒè¯é‚®ä»¶ï¼Œæ‚¨çš„éªŒè¯ç æ˜¯ï¼š" + code,
 					"text/html;charset=UTF-8");
-			// 4.·¢ËÍÓÊ¼ş
+			// 4.å‘é€é‚®ä»¶
 			Transport.send(message);
 		} catch (MessagingException e) {
 			e.printStackTrace();
@@ -110,40 +110,40 @@ public class MailUtil {
 	}
 
 	/**
-	 * ´´½¨Ò»·âÖ»°üº¬ÎÄ±¾µÄ¼òµ¥ÓÊ¼ş
+	 * åˆ›å»ºä¸€å°åªåŒ…å«æ–‡æœ¬çš„ç®€å•é‚®ä»¶
 	 *
 	 * @param session
-	 *            ºÍ·şÎñÆ÷½»»¥µÄ»á»°
+	 *            å’ŒæœåŠ¡å™¨äº¤äº’çš„ä¼šè¯
 	 * @param sendMail
-	 *            ·¢¼şÈËÓÊÏä
+	 *            å‘ä»¶äººé‚®ç®±
 	 * @param receiveMail
-	 *            ÊÕ¼şÈËÓÊÏä
+	 *            æ”¶ä»¶äººé‚®ç®±
 	 * @return
 	 * @throws Exception
 	 */
 	public MimeMessage createMimeMessage(Session session,
 			String sendMail, String receiveMail) throws Exception {
-		// 1. ´´½¨Ò»·âÓÊ¼ş
+		// 1. åˆ›å»ºä¸€å°é‚®ä»¶
 		MimeMessage message = new MimeMessage(session);
 
-		// 2. From: ·¢¼şÈË
-		message.setFrom(new InternetAddress(sendMail, "Ä³±¦Íø", "UTF-8"));
+		// 2. From: å‘ä»¶äºº
+		message.setFrom(new InternetAddress(sendMail, "æŸå®ç½‘", "UTF-8"));
 
-		// 3. To: ÊÕ¼şÈË£¨¿ÉÒÔÔö¼Ó¶à¸öÊÕ¼şÈË¡¢³­ËÍ¡¢ÃÜËÍ£©
+		// 3. To: æ”¶ä»¶äººï¼ˆå¯ä»¥å¢åŠ å¤šä¸ªæ”¶ä»¶äººã€æŠ„é€ã€å¯†é€ï¼‰
 		message.setRecipient(MimeMessage.RecipientType.TO, new InternetAddress(
-				receiveMail, "XXÓÃ»§", "UTF-8"));
+				receiveMail, "XXç”¨æˆ·", "UTF-8"));
 
-		// 4. Subject: ÓÊ¼şÖ÷Ìâ
-		message.setSubject("´òÕÛîÒ»İ", "UTF-8");
+		// 4. Subject: é‚®ä»¶ä¸»é¢˜
+		message.setSubject("æ‰“æŠ˜é’œæƒ ", "UTF-8");
 
-		// 5. Content: ÓÊ¼şÕıÎÄ£¨¿ÉÒÔÊ¹ÓÃhtml±êÇ©£©
-		message.setContent("XXÓÃ»§ÄãºÃ, ½ñÌìÈ«³¡5ÕÛ, ¿ìÀ´ÇÀ¹º, ´í¹ı½ñÌìÔÙµÈÒ»Äê¡£¡£¡£",
+		// 5. Content: é‚®ä»¶æ­£æ–‡ï¼ˆå¯ä»¥ä½¿ç”¨htmlæ ‡ç­¾ï¼‰
+		message.setContent("XXç”¨æˆ·ä½ å¥½, ä»Šå¤©å…¨åœº5æŠ˜, å¿«æ¥æŠ¢è´­, é”™è¿‡ä»Šå¤©å†ç­‰ä¸€å¹´ã€‚ã€‚ã€‚",
 				"text/html;charset=UTF-8");
 
-		// 6. ÉèÖÃ·¢¼şÊ±¼ä
+		// 6. è®¾ç½®å‘ä»¶æ—¶é—´
 		message.setSentDate(new Date());
 
-		// 7. ±£´æÉèÖÃ
+		// 7. ä¿å­˜è®¾ç½®
 		message.saveChanges();
 
 		return message;
@@ -152,7 +152,7 @@ public class MailUtil {
 //	public static void main(String[] args) {
 //		 MailUtil mailUtil = new MailUtil();
 //
-//		 mailUtil.sendMail("347165450@qq.com", "zjp");//½ÓÊÕ·½  ½ÓÊÜÂë
+//		 mailUtil.sendMail("â€¦â€¦@qq.com", "zjp");//æ¥æ”¶æ–¹  æ¥å—ç 
 //
 //	}
 }
